@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='active_redis',
-    version='0.0.1',
+    version='0.0.2',
     scripts=[],
     install_requires = ['redis'],
     packages=['active_redis'],
