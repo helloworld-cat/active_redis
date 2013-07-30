@@ -1,7 +1,6 @@
 from active_redis import ActiveRedis, ActiveRedisModel, UUIDGenerator
 import unittest
 
-
 TOPGUN_UUID = 1
 TITANIC_UUID = 2
 
@@ -20,6 +19,15 @@ class ActiveRedisModelTest(unittest.TestCase):
         ActiveRedis.config = {'connexion': {'db': 3},
                               'namespace_prefix': 'mycinema'}
         Movie.delete_all()
+
+    def test_redis_namespace(self):
+        ActiveRedis.config = {}
+        self.assertEqual('movies', Movie.redis_namespace())
+        print Movie.redis_namespace()
+
+        ActiveRedis.config = {'namespace_prefix': 'foo'}
+        self.assertEqual('foo:movies', Movie.redis_namespace())
+        print Movie.redis_namespace()
 
     def test_pluralize_model_name(self):
         self.assertEqual('movies', Movie.pluralize_model_name())

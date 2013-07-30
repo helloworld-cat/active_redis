@@ -1,3 +1,4 @@
+from active_redis import ActiveRedis
 from pluralize_engine import PluralizeEngine
 
 class ActiveRedisModel(object):
@@ -63,11 +64,11 @@ class ActiveRedisModel(object):
 
     @classmethod
     def redis_namespace(cls):
-        pluralized_model_name = cls.pluralize_model_name()
-        namespace_prefix = ActiveRedis.config.get('namespace_prefix', None)
-        if namespace_prefix is not None:
-            return '{}:{}'.format(namespace_prefix, pluralized_model_name)
-        else:
-            return '{}'.format(pluralized_model_name)
+        items = []
+        prefix = ActiveRedis.config.get('namespace_prefix', None)
+        if prefix is not None:
+            items.append(prefix) 
+        items.append(cls.pluralize_model_name())
+        return ':'.join(items)
 
 
